@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Work Completion List</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Your Work Completion Forms</h2>
+        <ul class="list-group">
+            {% for form in forms %}
+            <li class="list-group-item">
+                <strong>OMC:</strong> {{ form.omc }} <br>
+                <strong>Time Commenced:</strong> {{ form.time_commenced }} <br>
+                <strong>Time Completed:</strong> {{ form.time_completed }} <br>
+                <strong>Duration:</strong> {{ form.duration }} <br>
+                <strong>Material Used:</strong> {{ form.material_used }} <br>
+                <strong>Quantity:</strong> {{ form.quantity }} <br>
+                <strong>Number of Workmen:</strong> {{ form.number_of_workmen }} <br>
+                <strong>Hours Worked:</strong> {{ form.hours_worked }} <br>
+                <strong>Kilometers Traveled:</strong> {{ form.kilometers_traveled }} <br>
+                <strong>Lost Time Incidents:</strong> {{ form.lost_time_incidents }} <br>
+                <strong>Medical Treatment Cases:</strong> {{ form.medical_treatment_cases }} <br>
+                <strong>First Aid Cases:</strong> {{ form.first_aid_cases }} <br>
+                <strong>Oil Spilled:</strong> {{ form.oil_spilled }} <br>
+                <strong>Site Comment:</strong> {{ form.site_comment }} <br>
+                <strong>Google Address:</strong> {{ form.google_address }} <br>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
