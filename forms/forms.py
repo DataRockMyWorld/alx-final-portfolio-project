@@ -8,8 +8,13 @@ class WorkCompletionFormForm(forms.ModelForm):
             'omc', 'time_commenced', 'time_completed', 'material_used', 'quantity',
             'number_of_workmen', 'hours_worked', 'kilometers_traveled',
             'lost_time_incidents', 'medical_treatment_cases', 'first_aid_cases',
-            'oil_spilled', 'site_comment', 'google_address'
+            'oil_spilled', 'site_comment', 'google_address', 'latitude', 'longitude'
         ]
+        
+        widgets = {
+            'latitude': forms.HiddenInput(),
+            'longitude': forms.HiddenInput(),
+        }
 
 class ToolboxTalkFormForm(forms.ModelForm):
     class Meta:

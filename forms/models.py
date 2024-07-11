@@ -25,6 +25,8 @@ class WorkCompletionForm(models.Model):
     site_comment = models.TextField()
     google_address = models.CharField(max_length=255)
     image = models.ImageField(upload_to='work_completion_images/', null=True, blank=True)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         self.duration = self.time_completed - self.time_commenced
@@ -40,3 +42,5 @@ class ToolboxTalkForm(models.Model):
     attendees = models.IntegerField()
     location = models.CharField(max_length=255)
     image = models.ImageField(upload_to='toolbox_talk_images/', null=True, blank=True)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
