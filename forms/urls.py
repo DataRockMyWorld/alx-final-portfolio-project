@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import work_completion_form, work_completion_list, toolbox_talk_form, toolbox_talk_list
+from .views import work_completion_form, work_completion_list, toolbox_talk_form, toolbox_talk_list, form_list
 
 urlpatterns = [
+    path('list/', form_list, name='form_list'),
     path('work_completion/', work_completion_form, name='work_completion_form'),
     path('work_completion/list/', work_completion_list, name='work_completion_list'),
     path('toolbox_talk/', toolbox_talk_form, name='toolbox_talk_form'),

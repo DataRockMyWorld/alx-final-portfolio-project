@@ -1,5 +1,7 @@
+{% extends '../base.html' %}
 {% load static %}
 
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,13 +10,39 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 </head>
 <body>
-    <div class="container">
-        <h2>Toolbox Talk Form</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h2>Toolbox Talk Form</h2>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_topic">Topic</label>
+                        <input type="text" class="form-control" id="id_topic" name="topic">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_date">Date</label>
+                        <input type="date" class="form-control" id="id_date" name="date">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_presenter">Presenter</label>
+                        <input type="text" class="form-control" id="id_presenter" name="presenter">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_attendees">Attendees</label>
+                        <textarea class="form-control" id="id_attendees" name="attendees" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-4">Submit</button>
+                </form>
+            </div>
+        </div>
     </div>
+    <script src="{% static 'js/jquery-3.5.1.slim.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
+
+{% endblock %}
+

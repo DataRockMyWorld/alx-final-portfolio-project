@@ -1,28 +1,89 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - WorkSafe</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+            flex-direction: column;
+        }
+        .navbar-custom {
+            background-color: #0F52BA;
+            width: 100%;
+        }
+        .navbar-custom .navbar-brand {
+            color: #fff;
+            margin: auto;
+        }
+        .login-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .login-container h2 {
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-check-label {
+            margin-left: 1.25rem;
+        }
+        .login-container .btn {
+            width: 100%;
+        }
+        .login-container .forgot-password .register-link{
+            text-align: right;
+            display: block;
+            margin-top: 10px;
+            text-decoration: none;
+            text-hover: none;
+            color: #007bff;
+        }
+
+        a: link{
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
+    <nav class="navbar navbar-custom fixed-top">
+        <a class="navbar-brand" href="#">WorkSafe</a>
+    </nav>
+    <div class="login-container">
         <h2>Login</h2>
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" name="username" id="username" placeholder="Username">
+                <label for="username">Username or E-mail Address</label>
+                <input type="text" class="form-control" id="username" name="username" required>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                <input type="password" class="form-control" id="password" name="password" required>
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="rememberMe" name="remember_me">
+                <label class="form-check-label" for="rememberMe">Remember Me</label>
+            </div>
+            <a href="{% url 'password_reset' %}" class="forgot-password">Forgot Password?</a>
+            <br><a href="{% url 'register' %}" class="register-link">Don't have an account? Register here</a></br>
+            <button type="submit" class="btn btn-primary mt-3">Login</button>
         </form>
-        <p><a href="{% url 'password_reset' %}">Forgot Password?</a></p>
     </div>
+    <script src="{% static 'js/jquery-3.5.1.slim.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>

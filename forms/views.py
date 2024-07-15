@@ -38,3 +38,7 @@ def toolbox_talk_form(request):
 def toolbox_talk_list(request):
     forms = ToolboxTalkForm.objects.filter(user=request.user)
     return render(request, 'forms/toolbox_talk_list.html', {'forms': forms})
+
+@login_required
+def form_list(request):
+    return render(request, 'forms/form_list.html')

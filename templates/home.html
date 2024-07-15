@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="jumbotron text-center">
+    <h1>Welcome to WorkSafe</h1>
+    <p>Your comprehensive HSSE management system</p>
+</div>
+<div class="row">
+    <div class="col-md-4 icon-card">
+        <a href="{% url 'work_completion_form' %}">
+            <i class="fas fa-clipboard-check"></i>
+            <h4>Work Completion Form</h4>
+        </a>
+    </div>
+    <div class="col-md-4 icon-card">
+        <a href="{% url 'toolbox_talk_form' %}">
+            <i class="fas fa-toolbox"></i>
+            <h4>Toolbox Talk Form</h4>
+        </a>
+    </div>
+    <div class="col-md-4 icon-card">
+        <a href="{% url 'incident_report_form' %}">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h4>Incident Report Form</h4>
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4 icon-card">
+        <a href="{% url 'incident_report_list' %}">
+            <i class="fas fa-list"></i>
+            <h4>View Incident Reports</h4>
+        </a>
+    </div>
+    <div class="col-md-4 icon-card">
+        <a href="{% url 'toolbox_talk_list' %}">
+            <i class="fas fa-list-alt"></i>
+            <h4>View Toolbox Talks</h4>
+        </a>
+    </div>
+    <div class="col-md-4 icon-card">
+        <a href="{% url 'work_completion_list' %}">
+            <i class="fas fa-tasks"></i>
+            <h4>View Work Completion Forms</h4>
+        </a>
+    </div>
+    <div class="col-md-4 icon-card">
+        <a href="{% url 'upload_document' %}">
+            <i class="fas fa-tasks"></i>
+            <h4>Upload Documents</h4>
+        </a>
+    </div>
+</div>
+{% endblock %}

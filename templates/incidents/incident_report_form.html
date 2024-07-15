@@ -1,0 +1,139 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Incident Report Form</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h2>Incident Report Form</h2>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_site">Site</label>
+                        <select class="form-control" id="id_site" name="site">
+                            <option value="Vivo">Vivo</option>
+                            <option value="Goil">Goil</option>
+                            <option value="Total Energy">Total Energy</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_date_time">Date and Time</label>
+                        <input type="datetime-local" class="form-control" id="id_date_time" name="date_time">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_incident_type">Incident Type</label>
+                        <select class="form-control" id="id_incident_type" name="incident_type">
+                            <option value="Potential Incident">Potential Incident</option>
+                            <option value="Near Miss">Near Miss</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_impact_type">Impact Type</label>
+                        <select class="form-control" id="id_impact_type" name="impact_type">
+                            <option value="Safety">Safety</option>
+                            <option value="Health">Health</option>
+                            <option value="Environment">Environment</option>
+                            <option value="Security">Security</option>
+                            <option value="Reputation">Reputation</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_details">Details of Incident</label>
+                        <textarea class="form-control" id="id_details" name="details" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_location">Location</label>
+                        <input type="text" class="form-control" id="id_location" name="location">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_immediate_action">Immediate Action</label>
+                        <textarea class="form-control" id="id_immediate_action" name="immediate_action" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_status">Status</label>
+                        <select class="form-control" id="id_status" name="status">
+                            <option value="Open">Open</option>
+                            <option value="Close">Close</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_google_address">Google Address</label>
+                        <input type="text" class="form-control" id="id_google_address" name="google_address">
+                    </div>
+                    <div id="map"></div>
+                    <button type="submit" class="btn btn-primary mt-4">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -34.397, lng: 150.644},
+                zoom: 8
+            });
+            var input = document.getElementById('id_google_address');
+            var autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.bindTo('bounds', map);
+            var infowindow = new google.maps.InfoWindow();
+            var marker = new google.maps.Marker({
+                map: map,
+                anchorPoint: new google.maps.Point(0, -29)
+            });
+
+            autocomplete.addListener('place_changed', function() {
+                infowindow.close();
+                marker.setVisible(false);
+                var place = autocomplete.getPlace();
+                if (!place.geometry) {
+                    return;
+                }
+                if (place.geometry.viewport) {
+                    map.fitBounds(place.geometry.viewport);
+                } else {
+                    map.setCenter(place.geometry.location);
+                    map.setZoom(17);
+                }
+                marker.setPosition(place.geometry.location);
+                marker.setVisible(true);
+
+                var address = '';
+                if (place.address_components) {
+                    address = [
+                        (place.address_components[0] && place.address_components[0].short_name || ''),
+                        (place.address_components[1] && place.address_components[1].short_name || ''),
+                        (place.address_components[2] && place.address_components[2].short_name || '')
+                    ].join(' ');
+                }
+
+                infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+                infowindow.open(map, marker);
+
+                document.getElementById('id_latitude').value = place.geometry.location.lat();
+                document.getElementById('id_longitude').value = place.geometry.location.lng();
+            });
+        }
+
+        google.maps.event.addDomListener(window, 'load', initMap);
+    </script>
+</body>
+</html>
+{% endblock %}

@@ -1,28 +1,97 @@
+{% extends '../base.html' %}
 {% load static %}
-
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Work Completion Form</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
     <style>
         #map {
             height: 400px;
             width: 100%;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Work Completion Form</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <div id="map"></div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h2>Work Completion Form</h2>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_omc">OMC</label>
+                        <input type="text" class="form-control" id="id_omc" name="omc">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="id_time_commenced">Time Commenced</label>
+                            <input type="datetime-local" class="form-control" id="id_time_commenced" name="time_commenced">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="id_time_completed">Time Completed</label>
+                            <input type="datetime-local" class="form-control" id="id_time_completed" name="time_completed">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_duration">Duration</label>
+                        <input type="text" class="form-control" id="id_duration" name="duration">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_material_used">Material Used</label>
+                        <input type="text" class="form-control" id="id_material_used" name="material_used">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_quantity">Quantity</label>
+                        <input type="number" class="form-control" id="id_quantity" name="quantity">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_number_of_workmen">Number of Workmen</label>
+                        <input type="number" class="form-control" id="id_number_of_workmen" name="number_of_workmen">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_hours_worked">Hours Worked</label>
+                        <input type="number" class="form-control" id="id_hours_worked" name="hours_worked">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_kilometers_traveled">Kilometers Traveled</label>
+                        <input type="number" class="form-control" id="id_kilometers_traveled" name="kilometers_traveled">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_lost_time_incidents">Lost Time Incidents</label>
+                        <input type="number" class="form-control" id="id_lost_time_incidents" name="lost_time_incidents">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_medical_treatment_cases">Medical Treatment Cases</label>
+                        <input type="number" class="form-control" id="id_medical_treatment_cases" name="medical_treatment_cases">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_first_aid_cases">First Aid Cases</label>
+                        <input type="number" class="form-control" id="id_first_aid_cases" name="first_aid_cases">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_oil_spilled">Oil Spilled</label>
+                        <input type="number" class="form-control" id="id_oil_spilled" name="oil_spilled">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_site_comment">Site Comment</label>
+                        <textarea class="form-control" id="id_site_comment" name="site_comment" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_google_address">Google Address</label>
+                        <input type="text" class="form-control" id="id_google_address" name="google_address">
+                    </div>
+                    <div id="map"></div>
+                    <button type="submit" class="btn btn-primary mt-4">Submit</button>
+                </form>
+            </div>
+        </div>
     </div>
     <script>
         function initMap() {
@@ -76,3 +145,5 @@
     </script>
 </body>
 </html>
+
+{% endblock %}

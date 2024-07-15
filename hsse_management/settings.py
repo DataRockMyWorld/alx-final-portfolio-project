@@ -29,6 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
 # Application definition
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'incidents',
     'documents',
     'forms',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -62,7 +64,7 @@ ROOT_URLCONF = "hsse_management.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR , 'templates'],
+        "DIRS": [os.path.join(BASE_DIR , 'templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -143,5 +145,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_URL = '/users/login/'
+LOGOUT_REDIRECT_URL = '/users/login/'
+LOGIN_REDIRECT_URL = '/users/dashboard/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'jewelbansah@irocketmail.com'
+EMAIL_HOST_PASSWORD = 'Catalan100%'
+

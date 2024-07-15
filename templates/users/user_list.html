@@ -1,0 +1,28 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2 class="my-4">Pending User Approvals</h2>
+        <ul class="list-group">
+            {% for user in users %}
+            <li class="list-group-item">
+                <strong>Username:</strong> {{ user.username }}<br>
+                <strong>Email:</strong> {{ user.email }}<br>
+                <strong>Department:</strong> {{ user.department }}<br>
+                <a href="{% url 'approve_user' user.id %}" class="btn btn-success">Approve</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <script src="{% static 'js/jquery-3.5.1.slim.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

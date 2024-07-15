@@ -1,0 +1,81 @@
+{% extends '../base.html' %}
+{% load static %}
+{% block title %}Forms{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .section {
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+        .section h2 {
+            margin-bottom: 20px;
+        }
+        .form-section {
+            display: flex;
+            align-items: center;
+        }
+        .form-section img {
+            max-width: 50px;
+            margin-right: 20px;
+        }
+        .list-group-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top section with form icon and description -->
+        <div class="section">
+            <div class="form-section">
+                <img src="{% static 'images/form_icon.png' %}" alt="Form Icon">
+                <div>
+                    <h2>Submit a Form</h2>
+                    <p>Select a form below to fill and submit.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section below showing the list of forms -->
+        <div class="section">
+            <h2>Available Forms</h2>
+            <div class="list-group">
+                <a href="{% url 'work_completion_form' %}" class="list-group-item list-group-item-action">
+                    Work Completion Form
+                    <span class="badge badge-primary badge-pill">Fill</span>
+                </a>
+                <a href="{% url 'toolbox_talk_form' %}" class="list-group-item list-group-item-action">
+                    Toolbox Talk Form
+                    <span class="badge badge-primary badge-pill">Fill</span>
+                </a>
+                <a href="{% url 'incident_report_form' %}" class="list-group-item list-group-item-action">
+                    Incident Report Form
+                    <span class="badge badge-primary badge-pill">Fill</span>
+                </a>
+                <!-- Add more forms as needed -->
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/jquery-3.5.1.slim.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
+{% endblock %}
