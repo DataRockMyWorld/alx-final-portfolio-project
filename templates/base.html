@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,9 +86,9 @@
 </head>
 <body>
     <div class="header">
-        <h2>WorkSafe</h2>
+        <h3>WorkSafe</h3>
         <div class="user-info">
-            <img src="{% if request.user.profile_image %}{{ request.user.profile_image.url }}{% else %}{% static 'images/default_avatar.png' %}{% endif %}" alt="User Avatar">
+            <img src="{% if request.user.profile_picture %}{{ request.user.profile_picture.url }}{% else %}{% static 'images/default_avatar.png' %}{% endif %}" alt="User Avatar">
             <span>{{ request.user.username }}</span>
             <div class="logout">
                 <a href="{% url 'logout' %}">Logout</a>
@@ -102,6 +103,7 @@
             <a href="{% url 'document_categories' %}"><i class="fas fa-file-alt"></i> Documents</a>
             <a href="{% url 'account' %}"><i class="fas fa-user"></i> Profile</a>
             <a href="{% url 'kpi_dashboard' %}"><i class="fas fa-chart-bar"></i> KPI Dashboard</a>
+            <a href="{% url 'upload_document' %}"><i class="fas fa-upload"></i> Upload Document</a>
 
         </div>
         <div class="content">

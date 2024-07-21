@@ -14,3 +14,7 @@ class Document(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
     uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
     approved = models.BooleanField(default=False)
+    
+
+    def __str__(self):
+        return self.title

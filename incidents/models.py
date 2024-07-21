@@ -1,5 +1,7 @@
 from django.db import models
 from users.models import User
+from django.utils import timezone
+from django.contrib.auth.models import AbstractUser
 
 class IncidentReport(models.Model):
     SITE_CHOICES = [
@@ -23,7 +25,9 @@ class IncidentReport(models.Model):
         ('Close', 'Close'),
     ]
     site = models.CharField(max_length=20, choices=SITE_CHOICES)
-    date_time = models.DateTimeField()
+    date = models.DateField(default=timezone.now)
+    time = models.TimeField(default=timezone.now)
+    incident_number = models.IntegerField(default=1)
     incident_type = models.CharField(max_length=20, choices=INCIDENT_TYPE_CHOICES)
     impact_type = models.CharField(max_length=20, choices=IMPACT_TYPE_CHOICES)
     details = models.TextField()

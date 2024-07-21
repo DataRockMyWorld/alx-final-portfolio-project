@@ -1,45 +1,41 @@
 {% extends '../base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document List</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <style>
-        .document-card {
-            margin-bottom: 20px;
-        }
-        .document-card .card-header {
-            background-color: #f8f9fa;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2 class="my-4">Documents</h2>
-        <div class="row">
+{% block content %}
+<div class="container mt-5">
+    <h2>Documents in {{ category }}</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Icon</th>
+                <th>Title</th>
+                <th>Uploaded By</th>
+                <th>Uploaded At</th>
+                <th>Download</th>
+                {% if user.is_staff %}
+                <th>Delete</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
             {% for document in documents %}
-            <div class="col-md-4 document-card">
-                <div class="card">
-                    <div class="card-header">
-                        {{ document.title }}
-                    </div>
-                    <div class="card-body">
-                        <p><strong>Category:</strong> {{ document.get_category_display }}</p>
-                        <p><strong>Uploaded by:</strong> {{ document.uploaded_by.username }}</p>
-                        <p><strong>Uploaded at:</strong> {{ document.uploaded_at }}</p>
-                        <a href="{{ document.file.url }}" class="btn btn-primary" download>Download</a>
-                    </div>
-                </div>
-            </div>
+            <tr>
+                <td><i class="fas fa-file-alt"></i></td>
+                <td>{{ document.title }}</td>
+                <td>{{ document.uploaded_by.username }}</td>
+                <td>{{ document.uploaded_at }}</td>
+                <td><a href="{{ document.file.url }}" class="btn btn-success">Download</a></td>
+                {% if user.is_staff %}
+                <td>
+                    <form method="post" action="{% url 'document_delete' document.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+                {% endif %}
+            </tr>
             {% endfor %}
-        </div>
-    </div>
-    <script src="{% static 'js/jquery-3.5.1.slim.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-</body>
-</html>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

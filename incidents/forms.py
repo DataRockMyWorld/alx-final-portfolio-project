@@ -5,8 +5,8 @@ class IncidentReportForm(forms.ModelForm):
     class Meta:
         model = IncidentReport
         fields = [
-            'site', 'date_time', 'incident_type', 'impact_type', 'details', 'location',
-            'immediate_action', 'status', 'latitude', 'longitude'
+            'site', 'date', 'time', 'incident_type', 'impact_type', 'details', 'location',
+            'immediate_action', 'status', 'incident_number'
         ]
         widgets = {
             'latitude': forms.HiddenInput(),

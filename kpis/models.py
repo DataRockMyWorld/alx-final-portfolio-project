@@ -19,16 +19,16 @@ class KPI(models.Model):
         ("Reduce Incident Rates","Reduce Incident Rates"),
         ("Continually improve the HSSE Management System","Continually improve the HSSE Management System"),
     ]
+    date = models.DateField(default=timezone.now)
     Objective = models.CharField(max_length=255, choices=OBJECTIVES, default="Improve Control of Work (Cow)")
     kpi_name = models.CharField(max_length=255)
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
-    actual_value = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     target_value = models.DecimalField(max_digits=10, decimal_places=2)
     
-    def percentage_achieved(self):
+    def percentage_achieved(self, actual_value):
         if self.target_value == 0:
             return 0
-        return round((self.actual_value / self.target_value) * 100, 2)
+        return round((actual_value / self.target_value) * 100, 2)
 
 
     def __str__(self):

@@ -2,18 +2,22 @@
 {% load static %}
 
 {% block content %}
-<div class="container">
+<div class="container mt-5">
     <div class="section">
         <h2 class="mb-4">KPI Dashboard</h2>
         <form method="get" class="form-inline mb-4">
             {% csrf_token %}
             <div class="form-group mx-sm-3 mb-2">
-                {{ form.start_date.label_tag }}
-                {{ form.start_date }}
+                {{ date_form.date.label_tag }}
+                {{ date_form.date }}
             </div>
             <div class="form-group mx-sm-3 mb-2">
-                {{ form.end_date.label_tag }}
-                {{ form.end_date }}
+                {{ filter_form.objective.label_tag }}
+                {{ filter_form.objective }}
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+                {{ filter_form.category.label_tag }}
+                {{ filter_form.category }}
             </div>
             <button type="submit" class="btn btn-primary mb-2">Filter</button>
         </form>
@@ -22,11 +26,12 @@
         <table class="table table-striped table-hover">
             <thead class="thead-dark">
                 <tr>
-                    <th>Name</th>
+                    <th>Objective</th>
+                    <th>KPI</th>
                     <th>Category</th>
                     <th>Target Value</th>
                     <th>Actual Value</th>
-                    <th>Percentage Achieved</th>
+                    <th>Achieved</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,8 +47,92 @@
                 {% endfor %}
             </tbody>
         </table>
+        <div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    {% if kpis.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ kpis.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% for num in kpis.paginator.page_range %}
+                    <li class="page-item {% if kpis.number == num %}active{% endif %}">
+                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                    {% endfor %}
+                    {% if kpis.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ kpis.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div class="section">
+        <canvas id="kpiCategoryChart"></canvas>
+    </div>
+
+    <div class="section">
+        <canvas id="kpiTrendChart"></canvas>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // KPI Category Chart
+    var ctx = document.getElementById('kpiCategoryChart').getContext('2d');
+    var kpiCategoryChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [{% for category in kpi_categories %}'{{ category.category }}',{% endfor %}],
+            datasets: [{
+                label: 'Total Actual Values',
+                data: [{% for category in kpi_categories %}{{ category.total }},{% endfor %}],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // KPI Trend Chart
+    var ctx2 = document.getElementById('kpiTrendChart').getContext('2d');
+    var kpiTrendChart = new Chart(ctx2, {
+        type: 'line',
+        data: {
+            labels: [], // Add appropriate labels here
+            datasets: [{
+                label: 'KPI Trends',
+                data: [], // Add appropriate data here
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 {% endblock %}
+
+
 
 

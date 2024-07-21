@@ -8,7 +8,8 @@ class UserRegistrationForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'first_name', 'last_name', 'department', 'password1', 'password2']
 
-class UserProfileForm(UserChangeForm):
+class ProfilePictureForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['username', 'email', 'department', 'profile_image']
+        fields = ['profile_picture']
+

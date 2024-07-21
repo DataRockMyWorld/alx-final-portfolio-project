@@ -1,54 +1,97 @@
-{% extends 'base.html' %}
+{% load static %}
 
-{% block content %}
-<div class="jumbotron text-center">
-    <h1>Welcome to WorkSafe</h1>
-    <p>Your comprehensive HSSE management system</p>
-</div>
-<div class="row">
-    <div class="col-md-4 icon-card">
-        <a href="{% url 'work_completion_form' %}">
-            <i class="fas fa-clipboard-check"></i>
-            <h4>Work Completion Form</h4>
-        </a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkSafe Management System</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        .hero {
+            background: url('https://images.pexels.com/photos/416784/pexels-photo-416784.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940') no-repeat center center;
+            background-size: cover;
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: bold;
+        }
+        .features {
+            padding: 60px 0;
+        }
+        .feature-item {
+            text-align: center;
+            padding: 20px;
+        }
+        .feature-item img {
+            max-width: 100px;
+            margin-bottom: 20px;
+        }
+        .footer {
+            background: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">WorkSafe</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div>
+            <h1>Welcome to WorkSafe</h1>
+            <p>Your trusted HSSE Management System</p>
+            <a href="{% url 'login' %}" class="btn btn-lg btn-light">Get Started</a>
+        </div>
     </div>
-    <div class="col-md-4 icon-card">
-        <a href="{% url 'toolbox_talk_form' %}">
-            <i class="fas fa-toolbox"></i>
-            <h4>Toolbox Talk Form</h4>
-        </a>
+
+    <div class="container features">
+        <div class="row">
+            <div class="col-md-4 feature-item">
+                <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=100&w=100" alt="Forms">
+                <h3>Manage Forms</h3>
+                <p>Easily manage and submit all your HSSE forms.</p>
+            </div>
+            <div class="col-md-4 feature-item">
+                <img src="https://images.pexels.com/photos/3184396/pexels-photo-3184396.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=100&w=100" alt="Documents">
+                <h3>Document Control</h3>
+                <p>Keep track of all important documents and records.</p>
+            </div>
+            <div class="col-md-4 feature-item">
+                <img src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=100&w=100" alt="Dashboard">
+                <h3>Performance Tracking</h3>
+                <p>Track your HSSE performance with detailed dashboards.</p>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4 icon-card">
-        <a href="{% url 'incident_report_form' %}">
-            <i class="fas fa-exclamation-triangle"></i>
-            <h4>Incident Report Form</h4>
-        </a>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4 icon-card">
-        <a href="{% url 'incident_report_list' %}">
-            <i class="fas fa-list"></i>
-            <h4>View Incident Reports</h4>
-        </a>
-    </div>
-    <div class="col-md-4 icon-card">
-        <a href="{% url 'toolbox_talk_list' %}">
-            <i class="fas fa-list-alt"></i>
-            <h4>View Toolbox Talks</h4>
-        </a>
-    </div>
-    <div class="col-md-4 icon-card">
-        <a href="{% url 'work_completion_list' %}">
-            <i class="fas fa-tasks"></i>
-            <h4>View Work Completion Forms</h4>
-        </a>
-    </div>
-    <div class="col-md-4 icon-card">
-        <a href="{% url 'upload_document' %}">
-            <i class="fas fa-tasks"></i>
-            <h4>Upload Documents</h4>
-        </a>
-    </div>
-</div>
-{% endblock %}
+
+    <footer class="footer">
+        <p>&copy; 2024 WorkSafe Management System</p>
+    </footer>
+
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+</html>
+

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 
 class User(AbstractUser):
     DEPARTMENT_CHOICES = [
@@ -11,7 +12,7 @@ class User(AbstractUser):
     ]
     
     department = models.CharField(max_length=20, choices=DEPARTMENT_CHOICES)
-    profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
     is_approved = models.BooleanField(default=False)
     is_manager = models.BooleanField(default=False)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
     

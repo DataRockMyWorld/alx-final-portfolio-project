@@ -9,6 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
             background-color: #f8f9fa;
@@ -30,8 +31,9 @@
             display: flex;
             align-items: center;
         }
-        .form-section img {
-            max-width: 50px;
+        .form-section i {
+            font-size: 50px;
+            color: #007bff;
             margin-right: 20px;
         }
         .list-group-item {
@@ -46,7 +48,7 @@
         <!-- Top section with form icon and description -->
         <div class="section">
             <div class="form-section">
-                <img src="{% static 'images/form_icon.png' %}" alt="Form Icon">
+                <i class="fas fa-clipboard-list"></i>
                 <div>
                     <h2>Submit a Form</h2>
                     <p>Select a form below to fill and submit.</p>
@@ -58,17 +60,17 @@
         <div class="section">
             <h2>Available Forms</h2>
             <div class="list-group">
-                <a href="{% url 'work_completion_form' %}" class="list-group-item list-group-item-action">
+                <a href="{% url 'work_completion_form' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                     Work Completion Form
-                    <span class="badge badge-primary badge-pill">Fill</span>
+                    <span class="badge badge-primary badge-pill"><i class="fas fa-pencil-alt"></i> Fill</span>
                 </a>
-                <a href="{% url 'toolbox_talk_form' %}" class="list-group-item list-group-item-action">
+                <a href="{% url 'toolbox_talk_form' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                     Toolbox Talk Form
-                    <span class="badge badge-primary badge-pill">Fill</span>
+                    <span class="badge badge-primary badge-pill"><i class="fas fa-pencil-alt"></i> Fill</span>
                 </a>
-                <a href="{% url 'incident_report_form' %}" class="list-group-item list-group-item-action">
+                <a href="{% url 'incident_report_form' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                     Incident Report Form
-                    <span class="badge badge-primary badge-pill">Fill</span>
+                    <span class="badge badge-primary badge-pill"><i class="fas fa-pencil-alt"></i> Fill</span>
                 </a>
                 <!-- Add more forms as needed -->
             </div>
@@ -79,3 +81,4 @@
 </body>
 </html>
 {% endblock %}
+

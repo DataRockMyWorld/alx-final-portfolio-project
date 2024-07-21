@@ -5,10 +5,9 @@ class WorkCompletionFormForm(forms.ModelForm):
     class Meta:
         model = WorkCompletionForm
         fields = [
-            'omc', 'time_commenced', 'time_completed', 'material_used', 'quantity',
-            'number_of_workmen', 'hours_worked', 'kilometers_traveled',
-            'lost_time_incidents', 'medical_treatment_cases', 'first_aid_cases',
-            'oil_spilled', 'site_comment', 'google_address', 'latitude', 'longitude'
+            'omc', 'time_commenced', 'time_completed', 'duration', 'material_used', 'quantity',
+            'number_of_workmen', 'hours_worked', 'kilometers_traveled', 'lost_time_incidents',
+            'medical_treatment_cases', 'first_aid_cases', 'oil_spilled', 'fire_incident', 'site_comment', 'image'
         ]
         
         widgets = {
@@ -19,4 +18,6 @@ class WorkCompletionFormForm(forms.ModelForm):
 class ToolboxTalkFormForm(forms.ModelForm):
     class Meta:
         model = ToolboxTalkForm
-        fields = ['talk_date', 'subject', 'details', 'attendees', 'location', 'image']
+        fields = [
+            'omc', 'site_name', 'Job_description', 'attendees', 'image', 'toolbox_talk',
+        ]

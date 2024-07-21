@@ -1,13 +1,16 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.core.mail import send_mail
-from forms.models import WorkCompletionForm
+from forms.models import WorkCompletionForm, ToolboxTalkForm
 from incidents.models import IncidentReport
 from documents.models import Document
-from .forms import UserRegistrationForm, UserProfileForm
+from .forms import UserRegistrationForm, ProfilePictureForm
 from django.conf import settings
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import User
+from django.db.models import Count
+from django.db.models.functions import TruncMonth
+from itertools import chain
 
 def register(request):
     if request.method == 'POST':
@@ -37,6 +40,18 @@ def login_view(request):
     return render(request, 'registration/login.html')
 
 @login_required
+def account(request):
+    if request.method == 'POST':
+        form = ProfilePictureForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('account')
+    else:
+        form = ProfilePictureForm(instance=request.user)
+
+    return render(request, 'users/account.html', {'form': form})
+
+@login_required
 @user_passes_test(lambda u: u.is_manager)
 def approve_user(request, user_id):
     user = User.objects.get(id=user_id)
@@ -52,24 +67,35 @@ def user_list(request):
     users = User.objects.filter(is_approved=False)
     return render(request, 'users/user_list.html', {'users': users})
 
-@login_required
-def dashboard(request):
-    user_forms = WorkCompletionForm.objects.filter(user=request.user)
-    user_incidents = IncidentReport.objects.filter(user=request.user)
-    user_documents = Document.objects.filter(uploaded_by=request.user)
-    return render(request, 'users/dashboard.html', {
-        'user_forms': user_forms,
-        'user_incidents': user_incidents,
-        'user_documents': user_documents,
-    })
 
 @login_required
-def account(request):
-    if request.method == 'POST':
-        form = UserProfileForm(request.POST, request.FILES, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('account')
-    else:
-        form = UserProfileForm(instance=request.user)
-    return render(request, 'users/account.html', {'form': form})
+def dashboard(request):
+    work_completion_count = WorkCompletionForm.objects.filter(user=request.user).count()
+    incident_report_count = IncidentReport.objects.filter(user=request.user).count()
+    toolbox_talk_count = ToolboxTalkForm.objects.filter(user=request.user).count()
+
+    work_completion_data = WorkCompletionForm.objects.filter(user=request.user).annotate(month=TruncMonth('date')).values('month').annotate(count=Count('id'))
+    incident_report_data = IncidentReport.objects.filter(user=request.user).annotate(month=TruncMonth('date')).values('month').annotate(count=Count('id'))
+    toolbox_talk_data = ToolboxTalkForm.objects.filter(user=request.user).annotate(month=TruncMonth('date')).values('month').annotate(count=Count('id'))
+
+    # Combine the data from all forms
+    combined_data = list(chain(work_completion_data, incident_report_data, toolbox_talk_data))
+    
+    # Sort combined data by month
+    combined_data = sorted(combined_data, key=lambda x: x['month'])
+
+    form_counts = {
+        'work_completion': work_completion_count,
+        'incident_report': incident_report_count,
+        'toolbox_talk': toolbox_talk_count,
+    }
+
+    total_forms_filled = work_completion_count + incident_report_count + toolbox_talk_count
+
+    context = {
+        'form_counts': form_counts,
+        'forms_filled_over_time': combined_data,
+        'total_forms_filled': total_forms_filled
+    }
+
+    return render(request, 'users/dashboard.html', context)

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import WorkCompletionFormForm, ToolboxTalkFormForm
 from .models import WorkCompletionForm, ToolboxTalkForm
+from django.contrib import messages
 
 @login_required
 def work_completion_form(request):
@@ -11,7 +12,8 @@ def work_completion_form(request):
             work_form = form.save(commit=False)
             work_form.user = request.user
             work_form.save()
-            return redirect('dashboard')
+            messages.success(request, 'Work Completion Form successfully submitted!')
+            return redirect('work_completion_form')
     else:
         form = WorkCompletionFormForm()
     return render(request, 'forms/work_completion_form.html', {'form': form})
@@ -29,7 +31,8 @@ def toolbox_talk_form(request):
             toolbox_form = form.save(commit=False)
             toolbox_form.user = request.user
             toolbox_form.save()
-            return redirect('dashboard')
+            messages.success(request, 'Toolbox Talk Form successfully submitted!')
+            return redirect('toolbox_talk_form')
     else:
         form = ToolboxTalkFormForm()
     return render(request, 'forms/toolbox_talk_form.html', {'form': form})
