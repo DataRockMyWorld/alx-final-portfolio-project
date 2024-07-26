@@ -31,14 +31,30 @@ def export_kpi_pdf(request):
     p.drawString(400, y, "Actual Value")
     p.drawString(500, y, "Percentage Achieved")
     p.line(100, y - 5, width - 100, y - 5)
+    
+    work_completion_forms = WorkCompletionForm.objects.all()
+    incident_reports = IncidentReport.objects.all()
+    toolbox_talk_forms = ToolboxTalkForm.objects.all()
 
     for kpi in kpis:
+        actual_value = 0
+        if kpi.kpi_name == 'oil_spilled':
+            actual_value = work_completion_forms.count()
+        elif kpi.kpi_name == 'incident_number':
+            actual_value = incident_reports.count()
+        elif kpi.kpi_name == 'toolbox_talk':
+            actual_value = toolbox_talk_forms.count()
+        elif kpi.kpi_name == 'first_aid_cases':
+            actual_value = work_completion_forms.count()
+
+        percentage_achieved = round((actual_value / kpi.target_value) * 100, 2) if kpi.target_value > 0 else 0
+
         y -= 20
         p.drawString(100, y, kpi.kpi_name)
         p.drawString(200, y, kpi.category)
         p.drawString(300, y, str(kpi.target_value))
-        p.drawString(400, y, str(kpi.actual_value))
-        p.drawString(500, y, f"{kpi.percentage_achieved()}%")
+        p.drawString(400, y, str(actual_value))
+        p.drawString(500, y, f"{percentage_achieved}%")
 
     p.showPage()
     p.save()
@@ -116,9 +132,27 @@ def export_kpi_csv(request):
 
     writer = csv.writer(response)
     writer.writerow(['Name', 'Category', 'Target Value', 'Actual Value', 'Percentage Achieved'])
+    
+    
 
     kpis = KPI.objects.all()
+    work_completion_forms = WorkCompletionForm.objects.all()
+    incident_reports = IncidentReport.objects.all()
+    toolbox_talk_forms = ToolboxTalkForm.objects.all()
+    
     for kpi in kpis:
-        writer.writerow([kpi.kpi_name, kpi.category, kpi.target_value, kpi.actual_value, kpi.percentage_achieved()])
+        actual_value = 0
+        if kpi.kpi_name == 'oil_spilled':
+            actual_value = work_completion_forms.count()
+        elif kpi.kpi_name == 'incident_number':
+            actual_value = incident_reports.count()
+        elif kpi.kpi_name == 'toolbox_talk':
+            actual_value = toolbox_talk_forms.count()
+        elif kpi.kpi_name == 'first_aid_cases':
+            actual_value = work_completion_forms.count()
+
+        percentage_achieved = round((actual_value / kpi.target_value) * 100, 2) if kpi.target_value > 0 else 0
+
+        writer.writerow([kpi.kpi_name, kpi.category, kpi.target_value, actual_value, percentage_achieved])
 
     return response
