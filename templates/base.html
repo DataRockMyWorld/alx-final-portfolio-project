@@ -15,6 +15,9 @@
             flex-direction: column;
             background-color: #f8f9fa;
         }
+        a {
+            width: 100%;
+        }
         .wrapper {
             display: flex;
             flex: 1;
@@ -25,19 +28,30 @@
             width: 230px;
             background:  #0F52BA;
             color: #fff;
-            padding: 50px;
+            /* padding: 10px; */
         }
         .sidebar a {
             color: #fff;
+            width: 230px;
             text-decoration: none;
             display: block;
-            padding: 20px 0;
-            transition: background 0.3s;
+            /* padding: 20px 0; */
+            padding-left: 40px;
+            padding-top: 30px;
+            padding-bottom: 30px;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         .sidebar a:hover {
             background: #FFFFFF;
             color: #0F52BA;
+            transform: translateY(-2px);
+
         }
+        .sidebar a.active {
+        background: #FFFFFF;
+        color: #0F52BA;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
         .content {
             flex: 1;
             padding: 20px;
@@ -50,6 +64,7 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid #dee2e6;
+            box-shadow: 0 4px 6px -4px rgba(0, 0, 0, 0.3);
         }
         .header .user-info {
             display: flex;
@@ -92,19 +107,20 @@
             <span>{{ request.user.username }}</span>
             <div class="logout">
                 <a href="{% url 'logout' %}">Logout</a>
-                <
             </div>
         </div>
     </div>
     <div class="wrapper">
         <div class="sidebar">
-            <a href="{% url 'dashboard' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-            <a href="{% url 'form_list' %}"><i class="fas fa-clipboard-list"></i> Forms</a>
-            <a href="{% url 'document_categories' %}"><i class="fas fa-file-alt"></i> Documents</a>
-            <a href="{% url 'account' %}"><i class="fas fa-user"></i> Profile</a>
-            <a href="{% url 'kpi_dashboard' %}"><i class="fas fa-chart-bar"></i> KPI Dashboard</a>
-            <a href="{% url 'upload_document' %}"><i class="fas fa-upload"></i> Upload Document</a>
-
+            <div class="sidebar">
+                <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="{% url 'form_list' %}" class="{% if request.resolver_match.url_name == 'form_list' %}active{% endif %}"><i class="fas fa-clipboard-list"></i> Forms</a>
+                <a href="{% url 'document_categories' %}" class="{% if request.resolver_match.url_name == 'document_categories' %}active{% endif %}"><i class="fas fa-file-alt"></i> Documents</a>
+                <a href="{% url 'account' %}" class="{% if request.resolver_match.url_name == 'account' %}active{% endif %}"><i class="fas fa-user"></i> Profile</a>
+                <a href="{% url 'kpi_dashboard' %}" class="{% if request.resolver_match.url_name == 'kpi_dashboard' %}active{% endif %}"><i class="fas fa-chart-bar"></i> KPI Dashboard</a>
+                <a href="{% url 'upload_document' %}" class="{% if request.resolver_match.url_name == 'upload_document' %}active{% endif %}"><i class="fas fa-upload"></i> Upload Document</a>
+            </div>
+            
         </div>
         <div class="content">
             {% block content %}
