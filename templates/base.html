@@ -69,11 +69,12 @@
         .header .user-info {
             display: flex;
             align-items: center;
+            position: relative;
         }
         .header .user-info img {
             border-radius: 50%;
-            width: 32px;
-            height: 32px;
+            width: 40px;
+            height: 40px;
             object-fit: cover;
             margin-right: 10px;
         }
@@ -83,12 +84,34 @@
         .header .logout {
             display: none;
             position: absolute;
-            top: 50px;
+            top: 40px;
             right: 20px;
             background: #fff;
             border: 1px solid #dee2e6;
             padding: 10px;
             border-radius: 5px;
+            z-index: 1;
+            transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth transition */
+            opacity: 0; 
+            visibility: hidden;
+        }
+        .header .user-info:hover .logout {
+        opacity: 1; 
+        visibility: visible;
+        }
+
+        .header .logout a {
+        display: block;
+        color: #0F52BA;
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background 0.3s, color 0.3s;
+        }
+
+        .header .logout a:hover {
+        background: #0F52BA;
+        color: #ffffff;
         }
         .footer {
             background: #E8E8E8;
